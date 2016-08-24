@@ -1,0 +1,46 @@
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+        <a href="http://127.0.0.1:8000/Stock/add">添加数据</a>
+
+        <a href="http://127.0.0.1:8000/Stock/table">查看数据</a>
+
+        <a href="http://127.0.0.1:8000/Stock/table">删除数据</a>
+
+        <a href="http://127.0.0.1:8000/Stock/table">修改数据</a>
+
+    <h4>商品信息表：</h4>
+        <table border="1">
+        <tr>
+            <td>商品名称  </td>
+            <td>商品条码  </td>
+            <td>进货价格  </td>
+            <td>进货渠道  </td>
+            <td>商品规格  </td>
+            <td>商品包装  </td>
+            <td>商品分类（一级） </td>
+            <td>商品分类（二级） </td>
+            <td>存放方式  </td>
+            <td>商品保质期  </td>
+            <td>商品库存  </td>
+        </tr>
+            {% for line in product_list %}
+            <tr>
+                <td>{{line.product_name}}</td>
+                <td>{{line.barcode}}</td>
+                <td>{{line.in_price}}</td>
+                <td>{{line.source}}</td>
+                <td>{{line.spec}}</td>
+                <td>{{line.unit}}</td>
+                <td>{{line.big_class}}</td>
+                <td>{{line.small_class}}</td>
+                <td>{{line.storage_methods}}</td>
+                <td>{{line.shelf_life}}天</td>
+                <td>{{line.stock}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+</head>

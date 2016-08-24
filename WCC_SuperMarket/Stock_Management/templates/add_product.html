@@ -1,0 +1,40 @@
+<html>
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <title>查查超市后台添加商品</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+    </head>
+    <body>
+
+        <a href="http://127.0.0.1:8000/Stock/add">添加数据</a>
+
+        <a href="http://127.0.0.1:8000/Stock/">查看数据</a>
+
+        <a href="http://127.0.0.1:8000/Stock/table">删除数据</a>
+
+        <a href="http://127.0.0.1:8000/Stock/table">修改数据</a>
+
+        <div class="page-container">
+            <h1>添加商品</h1>
+            <form action="../Stock/add" method="post">
+                <input type="text" name="product_name" class="product_name" placeholder="请输入商品名">
+                <input type="text" name="barcode" class="barcode" placeholder="请输入商品条码">
+                <input type="text" name="in_price" class="in_price" placeholder="请输入商品进货价格">
+                <input type="text" name="out_price" class="out_price" placeholder="请输入商品售出价格">
+                <input type="text" name="spec" class="spec" placeholder="请输入商品规格">
+                <input type="text" name="unit" class="unit" placeholder="请输入商品包装">
+                <input type="text" name="shelf_life" class="shelf_life" placeholder="请输入商品保质期">
+                <input type="text" name="discount" class="discount" placeholder="请输入商品折扣">
+                <input type="text" name="activity" class="activity" placeholder="请输入商品是否开展活动">
+                <input type="text" name="rainbowcode" class="rainbowcode" placeholder="请输入商品对应的彩虹码">
+                <button type="submit" class="submit_button">添加商品</button>
+            </form>
+        </div>
+    </body>
+
+</html>
+
