@@ -21,5 +21,12 @@ from . import views
 urlpatterns = [
     url(r'^$', views.Table, name='Home'),
     url(r'^table', views.Test, name='table'),
-    url('^add$',views.Table,name= 'add')
+    url('^add$', views.add_products, name='add_products'),
+
+    # url(r'list/$', views.get_xx_tabs, ),
+    # url(r'detail/([0-9]+)$', views.get_xx_tab),
+    # url(r'delete/([0-9]+)$', views.delete_xx_tab),
+    # url(r'update/([0-9]+)$', views.update_xx_tab),
+    url(r'add/$', views.add_xx_tab),
+
 ]
