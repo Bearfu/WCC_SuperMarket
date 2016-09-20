@@ -20,13 +20,16 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.Table, name='Home'),
-    url(r'^table', views.Test, name='table'),
-    url('^add$', views.add_products, name='add_products'),
+    url(r'^table', views.Table, name='table'),
+    url(r'^test', views.Test, name='test'),
+    url(r'^add$', views.add_products, name='add_products'),
+    url(r'api/test$', views.Test, name='test'),
+    url(r'api/purchase/upload_index$', views.upload_index, name='upload_index'),
+    url(r'api/purchase/get_product_info$', views.get_product_info, name='get_product_info'),
+    url(r'api/purchase/order_list$', views.order_list, name='order_list'),
+    url(r'api/purchase/Write_off$', views.Write_off, name='Write_off'),
+    url(r'api/purchase/print_rainbowcode$', views.print_rainbowcode, name='print_rainbowcode'),
 
-    # url(r'list/$', views.get_xx_tabs, ),
-    # url(r'detail/([0-9]+)$', views.get_xx_tab),
-    # url(r'delete/([0-9]+)$', views.delete_xx_tab),
-    # url(r'update/([0-9]+)$', views.update_xx_tab),
-    url(r'add/$', views.add_xx_tab),
+
 
 ]

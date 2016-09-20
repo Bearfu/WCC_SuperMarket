@@ -1,0 +1,147 @@
+
+---------------------------------------------------------------------------------------------------------------
+1、服务器联通性测试接口
+请求：
+GET	http://xxx.xxx.xxx.xxx/api/Superarket/Test
+
+响应：
+status	服务器状态，string
+
+
+---------------------------------------------------------------------------------------------------------------
+2、根据仓库id、扫描枪id获取满足条件的单据id列表（未被下载或已下载但未完成，并且未关闭的）
+请求：
+GET	http://xxx.xxx.xxx.xxx/api/OutStore/ListBills/?storehouseCode=xxx&scannerID=xxx
+storehouseCode		仓库编码，string
+scannerID		扫描枪id，string
+
+响应：
+bills [array]
+	billCode	单据编号，string
+	billType	单据类型，string
+
+
+---------------------------------------------------------------------------------------------------------------
+3、根据单据id获取产品id列表
+请求：
+GET	http://xxx.xxx.xxx.xxx/api/OutStore/ListProducts/?billCode=xxx
+billCode	单据编码，string
+
+响应：
+products [array]
+	productCode	产品编码，string
+	productName	产品名称，string
+
+
+---------------------------------------------------------------------------------------------------------------
+4、根据产品id获取产品详情
+请求：
+GET	http://xxx.xxx.xxx.xxx/api/OutStore/ProductDetail/?productCode=xxx&billCode=xxx
+productCode	产品编码，string
+billCode	单据编码，string
+
+响应：
+customerName	经销商名称，string
+billType	单据类型，string
+productCode	产品编码，string
+productName	产品名称，string
+packScale1R2	盒箱比例，int
+packScale2R3	箱垛比例，int
+quantity	产品数量（箱），int
+uploadQuantity	已出库量（箱），int
+distRemainQTY	剩余数量（箱），int
+billStatus	单据状态，string
+
+
+---------------------------------------------------------------------------------------------------------------
+5、下载指定id的单据（更新为已下载，记录下载时间，并不真正下载到扫描枪）
+请求：
+GET	http://xxx.xxx.xxx.xxx/api/OutStore/DownloadBill/?billCode=xxx&prdCode=xxx&scannerId=xxx
+billCode	单据编码，string
+prdCode 	商品编码，string
+scannerId   扫描设备，string
+
+响应：
+这里应该用billCode和prdCode来确定唯一一张单据，不是一张单据只能一个人扫，而是一张单据的一个商品种类由一个人扫。
+status		操作结果，string
+status应该有以下几种情况，
+1）、失败Failure 该单据已经被标记过，ToScanner已经被标记，且ScannerId都有值了。
+2）、成功Success 单据未被标记过，将ToScanner和ScannerId都标记
+其中、前提是在入库时，检测有标记就不加。
+
+---------------------------------------------------------------------------------------------------------------
+6、正常出库，上传扫描到的条码和选择的单据id、产品id，服务器做条码类型校验（盒码、箱码、垛码）、产品校验、重复校验。
+如果校验通过：在ScanInfo表中插入若干记录，然后更新单据信息（增加已上传数量、上传时间），最后返回本次扫描实际箱子数量（正数）；
+如果校验不通过：返回0
+请求：
+GET	http://xxx.xxx.xxx.xxx/api/OutStore/CommitBarcode/?billCode=xxx&productCode=xxx&barcode=xxx&colorCode=xxx&scannerId=xxx
+billCode	单据编码，string
+productCode	产品编码，string
+barcode		EAN13码（箱码或垛码），string
+colorCode	彩虹码（箱码或垛码），string
+scannerId   扫描设备编号，string
+
+响应：
+num		实际增加箱子个数，int
+
+
+---------------------------------------------------------------------------------------------------------------
+7、撤销出库，上传扫描到的条码和选择的单据id、产品id，服务器做条码类型校验（盒码、箱码、垛码）、产品校验、重复校验。
+如果校验通过：在ScanInfo表中删除若干记录，然后更新单据信息（减少已上传数量、上传时间），最后返回本次扫描实际箱子数量（负数）；
+如果校验不通过：返回0
+请求：
+GET	http://xxx.xxx.xxx.xxx/api/OutStore/CancelBarcode/?billCode=xxx&productCode=xxx&barcode=xxx&colorCode=xxx&scannerId=xxx
+billCode	单据编码，string
+productCode	产品编码，string
+barcode		EAN13码（箱码或垛码），string
+colorCode	彩虹码（箱码或垛码），string
+scannerId   扫描设备编号，string
+
+响应：
+num		实际减少箱子个数，int
+
+
+
+
+
+
+
+
+
+Test Case:
+
+ListBills:
+
+	http://localhost:8080/api/OutStore/ListBills/?StorehouseCode=3101234567_001&ScannerId=865983026974502
+	302697450286598
+
+ListProducts:
+
+	http://localhost:8080/api/OutStore/ListProducts/?billCode=Bill__43210
+
+ProductDetail:
+
+	http://localhost:8080/api/OutStore/ProductDetail/?productCode=JZZ1357924&billCode=Bill__43210
+
+DownloadBill:
+	http://localhost:8080/api/OutStore/DownloadBill/?billCode=Bill__43210&scannerId=865983026974502
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
